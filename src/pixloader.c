@@ -29,8 +29,11 @@ pixbufRead_cb (GObject *source_object, GAsyncResult *res, gpointer user_data)
     pix = gdk_pixbuf_new_from_stream_finish (res, &error);
 
     if (error) {
+    	
         g_print ("upps\n");
+
         g_error_free (error);
+
         gtk_main_quit ();
     } 
 
@@ -47,10 +50,15 @@ fileRead_cb (GFile *file, GAsyncResult *res, gpointer user_data)
     GFileInputStream *input = g_file_read_finish (file, res, &error);
     
     if (!error) {
+
         gdk_pixbuf_new_from_stream_async ((GInputStream*)input, NULL, (GAsyncReadyCallback)pixbufRead_cb, NULL);        
+
     } else {
+
         g_print ("upps\n");
+
         g_error_free (error);
+
         gtk_main_quit ();
     } 
 }    
