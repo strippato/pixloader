@@ -17,6 +17,7 @@
  */
 
 #include <gtk/gtk.h>
+#include <stdlib.h>
 
 static GdkPixbuf *pix = NULL;
 static GtkImage  *img = NULL;
@@ -34,7 +35,7 @@ pixbufRead_cb (GObject *source_object, GAsyncResult *res, gpointer user_data)
 
         g_error_free (error);
 
-        gtk_main_quit ();
+        exit (EXIT_FAILURE);
     } 
 
     gtk_image_set_from_pixbuf (img, pix);
@@ -59,8 +60,11 @@ fileRead_cb (GFile *file, GAsyncResult *res, gpointer user_data)
 
         g_error_free (error);
 
-        gtk_main_quit ();
+        exit (EXIT_FAILURE);
     } 
+    
+    g_object_unref (input);
+
 }    
 
 
@@ -96,5 +100,5 @@ main (int argc, char *argv[])
 
     g_object_unref (file);
 
-    return 0;
+    return EXIT_SUCCESS;
 }
